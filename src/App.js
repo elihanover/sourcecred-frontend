@@ -10,6 +10,7 @@ import { useGlobalData, useGlobalChartData } from './contexts/GlobalData'
 import { isAddress } from './utils'
 import AccountPage from './pages/AccountPage'
 import AllTokensPage from './pages/AllTokensPage'
+import AllBadgesPage from './pages/AllBadgesPage'
 import AllPairsPage from './pages/AllPairsPage'
 import PinnedData from './components/PinnedData'
 
@@ -19,6 +20,7 @@ import LocalLoader from './components/LocalLoader'
 import { useLatestBlocks } from './contexts/Application'
 import GoogleAnalyticsReporter from './components/analytics/GoogleAnalyticsReporter'
 import { PAIR_BLACKLIST, TOKEN_BLACKLIST } from './constants'
+import AllCredsPage from './pages/AllCredsPage'
 
 const AppWrapper = styled.div`
   position: relative;
@@ -183,9 +185,21 @@ function App() {
                 </LayoutWrapper>
               </Route>
 
+              <Route path="/cred">
+                <LayoutWrapper savedOpen={savedOpen} setSavedOpen={setSavedOpen}>
+                  <AllCredsPage />
+                </LayoutWrapper>
+              </Route>
+
               <Route path="/tokens">
                 <LayoutWrapper savedOpen={savedOpen} setSavedOpen={setSavedOpen}>
                   <AllTokensPage />
+                </LayoutWrapper>
+              </Route>
+
+              <Route path="/badges">
+                <LayoutWrapper savedOpen={savedOpen} setSavedOpen={setSavedOpen}>
+                  <AllBadgesPage />
                 </LayoutWrapper>
               </Route>
 

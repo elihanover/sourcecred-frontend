@@ -744,3 +744,47 @@ export function useTopLps() {
 
   return topLps
 }
+
+
+/**
+ * Get the top SourceCred users based on grain amount
+ * @TODO Uses dummy data right now.
+ */
+export function useTopUsers() {
+  return [
+    {
+      username: 'decentralion',
+      address: '0x8ADbc19F60cAb31dBbb547F2e131987A0C3092B1',
+      cred: 37000,
+      grain: 350000,
+    },
+    {
+      username: 'lbstrobbe',
+      address: '0x687989dfvdf8v9f783bsd',
+      cred: 16000,
+      grain: 99000,
+    },
+    {
+      username: 'Thena',
+      address: '0x0983498jvdfvdf8v9f783bsd',
+      cred: 16000,
+      grain: 60000,
+    },
+    {
+      username: 'KuraFire',
+      address: '0x3498jvdfvdf8v9f783bsd',
+      cred: 14000,
+      grain: 64000,
+    },
+    {
+      username: 's-ben',
+      address: '0x987jvdfvdf8v9f783bsd',
+      cred: 14000,
+      grain: 90000,
+    },
+  ]
+}
+
+export function useUsernames() {
+  return useTopUsers().map((user) => user.username)
+}

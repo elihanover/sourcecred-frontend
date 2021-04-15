@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react'
 import 'feather-icons'
 import { withRouter } from 'react-router-dom'
-import { TYPE } from '../Theme'
+import { TYPE, ThemedBackground } from '../Theme'
+import { transparentize } from 'polished'
 import { PageWrapper, FullWrapper } from '../components'
 import Panel from '../components/Panel'
 import LPList from '../components/LPList'
 import styled from 'styled-components'
 import AccountSearch from '../components/AccountSearch'
-import { useTopLps } from '../contexts/GlobalData'
+import { useTopUsers } from '../contexts/GlobalData'
 import LocalLoader from '../components/LocalLoader'
 import { RowBetween } from '../components/Row'
 import { useMedia } from 'react-use'
@@ -25,24 +26,25 @@ function AccountLookup() {
     window.scrollTo(0, 0)
   }, [])
 
-  const topLps = useTopLps()
-
+  // const topLps = useTopLps()
+  const topUsers = useTopUsers()
   const below600 = useMedia('(max-width: 600px)')
 
   return (
     <PageWrapper>
+      <ThemedBackground backgroundColor={transparentize(0.6, '#ff007a')} />
       <FullWrapper>
         <RowBetween>
-          <TYPE.largeHeader>Wallet analytics</TYPE.largeHeader>
+          <TYPE.largeHeader>SourceCred Wallets</TYPE.largeHeader>
           {!below600 && <Search small={true} />}
         </RowBetween>
         <AccountWrapper>
           <AccountSearch />
         </AccountWrapper>
         <TYPE.main fontSize={'1.125rem'} style={{ marginTop: '2rem' }}>
-          Top Liquidity Positions
+          Contributors
         </TYPE.main>
-        <Panel>{topLps && topLps.length > 0 ? <LPList lps={topLps} maxItems={200} /> : <LocalLoader />}</Panel>
+        <Panel>{topUsers && topUsers.length > 0 ? <LPList lps={topUsers} maxItems={200} /> : <LocalLoader />}</Panel>
       </FullWrapper>
     </PageWrapper>
   )

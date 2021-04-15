@@ -12,7 +12,7 @@ import { useMedia } from 'react-use'
 // import CheckBox from '../components/Checkbox'
 // import QuestionHelper from '../components/QuestionHelper'
 
-function AllTokensPage() {
+function AllCredsPage() {
   const allTokens = useAllTokenData()
 
   useEffect(() => {
@@ -27,7 +27,7 @@ function AllTokensPage() {
     <PageWrapper>
       <FullWrapper>
         <RowBetween>
-          <TYPE.largeHeader>SourceCred Tokens (ERC20)</TYPE.largeHeader>
+          <TYPE.largeHeader>SourceCred Cred Types</TYPE.largeHeader>
           {!below600 && <Search small={true} />}
         </RowBetween>
         {/* <AutoRow gap="4px">
@@ -42,4 +42,4 @@ function AllTokensPage() {
   )
 }
 
-export default AllTokensPage
+export default AllCredsPage

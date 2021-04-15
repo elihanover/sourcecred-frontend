@@ -75,7 +75,7 @@ const DataText = styled(Flex)`
   }
 `
 
-function LPList({ lps, disbaleLinks, maxItems = 10 }) {
+function UserList({ lps, disbaleLinks, maxItems = 10 }) {
   const below600 = useMedia('(max-width: 600px)')
   const below800 = useMedia('(max-width: 800px)')
 
@@ -108,8 +108,8 @@ function LPList({ lps, disbaleLinks, maxItems = 10 }) {
           </DataText>
         )}
         <DataText area="name" fontWeight="500" justifyContent="flex-start">
-          <CustomLink style={{ marginLeft: below600 ? 0 : '1rem', whiteSpace: 'nowrap' }} to={'/account/' + lp.user.id}>
-            {below800 ? lp.user.id.slice(0, 4) + '...' + lp.user.id.slice(38, 42) : lp.user.id}
+          <CustomLink style={{ marginLeft: below600 ? 0 : '1rem', whiteSpace: 'nowrap' }} to={'/account/' + lp.username}>
+            {below800 ? lp.username.slice(0, 4) + '...' + lp.username.slice(38, 42) : lp.username}
           </CustomLink>
         </DataText>
 
@@ -119,15 +119,16 @@ function LPList({ lps, disbaleLinks, maxItems = 10 }) {
           </DataText>
         )} */}
 
-        <DataText>
+        {/* <DataText>
           <CustomLink area="pair" to={'/pair/' + lp.pairAddress}>
             <RowFixed>
               {!below600 && <DoubleTokenLogo a0={lp.token0} a1={lp.token1} size={16} margin={true} />}
               {lp.pairName}
             </RowFixed>
           </CustomLink>
-        </DataText>
-        <DataText area="value">{formattedNum(lp.usd, true)}</DataText>
+        </DataText> */}
+        <DataText area="value">{Math.floor(lp.cred)}</DataText>
+        <DataText area="value">{formattedNum(lp.grain, true)}</DataText>
       </DashGrid>
     )
   }
@@ -159,12 +160,18 @@ function LPList({ lps, disbaleLinks, maxItems = 10 }) {
             <TYPE.main area="type">Type</TYPE.main>
           </Flex>
         )} */}
-        <Flex alignItems="center" justifyContent="flexEnd">
+        {/* <Flex alignItems="center" justifyContent="flexEnd">
           <TYPE.main area="pair">Pair</TYPE.main>
+        </Flex> */}
+        <Flex alignItems="center" justifyContent="flexEnd">
+          <TYPE.main area="pair">Cred</TYPE.main>
         </Flex>
         <Flex alignItems="center" justifyContent="flexEnd">
-          <TYPE.main area="value">Value</TYPE.main>
+          <TYPE.main area="pair">Grain</TYPE.main>
         </Flex>
+        {/* <Flex alignItems="center" justifyContent="flexEnd">
+          <TYPE.main area="value">Value</TYPE.main>
+        </Flex> */}
       </DashGrid>
       <Divider />
       <List p={0}>{!lpList ? <LocalLoader /> : lpList}</List>
@@ -181,4 +188,4 @@ function LPList({ lps, disbaleLinks, maxItems = 10 }) {
   )
 }
 
-export default withRouter(LPList)
+export default withRouter(UserList)

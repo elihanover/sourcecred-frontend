@@ -10,7 +10,8 @@ import UserChart from '../components/UserChart'
 import PairReturnsChart from '../components/PairReturnsChart'
 import PositionList from '../components/PositionList'
 import MiningPositionList from '../components/MiningPositionList'
-import { TYPE } from '../Theme'
+import { TYPE, ThemedBackground } from '../Theme'
+import { transparentize } from 'polished'
 import { ButtonDropdown, ButtonLight } from '../components/ButtonStyled'
 import { PageWrapper, ContentWrapper, StyledIcon } from '../components'
 import DoubleTokenLogo from '../components/DoubleLogo'
@@ -162,6 +163,7 @@ function AccountPage({ account }) {
 
   return (
     <PageWrapper>
+      <ThemedBackground backgroundColor={transparentize(0.6, '#ff007a')} />
       <ContentWrapper>
         <RowBetween>
           <TYPE.body>
@@ -265,7 +267,7 @@ function AccountPage({ account }) {
               <AutoRow gap="20px">
                 <AutoColumn gap="10px">
                   <RowBetween>
-                    <TYPE.body>Liquidity (Including Fees)</TYPE.body>
+                    <TYPE.body>Grain</TYPE.body>
                     <div />
                   </RowBetween>
                   <RowFixed align="flex-end">
@@ -280,7 +282,7 @@ function AccountPage({ account }) {
                 </AutoColumn>
                 <AutoColumn gap="10px">
                   <RowBetween>
-                    <TYPE.body>Fees Earned (Cumulative)</TYPE.body>
+                    <TYPE.body>Cred</TYPE.body>
                     <div />
                   </RowBetween>
                   <RowFixed align="flex-end">
@@ -313,7 +315,7 @@ function AccountPage({ account }) {
           >
             <PositionList positions={positions} />
           </Panel>
-          <TYPE.main fontSize={'1.125rem'} style={{ marginTop: '3rem' }}>
+          {/* <TYPE.main fontSize={'1.125rem'} style={{ marginTop: '3rem' }}>
             Liquidity Mining Pools
           </TYPE.main>
           <Panel
@@ -330,6 +332,16 @@ function AccountPage({ account }) {
                 </AutoRow>{' '}
               </AutoColumn>
             )}
+          </Panel> */}
+          <TYPE.main fontSize={'1.125rem'} style={{ marginTop: '3rem' }}>
+            Top Contributions
+          </TYPE.main>{' '}
+          <Panel
+            style={{
+              marginTop: '1.5rem',
+            }}
+          >
+            <TxnList transactions={transactions} />
           </Panel>
           <TYPE.main fontSize={'1.125rem'} style={{ marginTop: '3rem' }}>
             Transactions

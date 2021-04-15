@@ -14,6 +14,7 @@ import { Divider } from '..'
 import { Flex } from 'rebass'
 
 import { X } from 'react-feather'
+import { useUsernames, useTopUsers } from '../../contexts/GlobalData'
 
 const Wrapper = styled.div`
   display: flex;
@@ -75,14 +76,23 @@ const DashGrid = styled.div`
 
 function AccountSearch({ history, small }) {
   const [accountValue, setAccountValue] = useState()
-  const [savedAccounts, addAccount, removeAccount] = useSavedAccounts()
+  const users = useTopUsers()
+  const usernames = useUsernames()
+  // const [savedAccounts, addAccount, removeAccount] = useSavedAccounts()
 
   function handleAccountSearch() {
+    console.log(accountValue)
+    console.log(usernames)
+    console.log(usernames.indexOf(accountValue) > -1)
+
+    if (usernames.indexOf(accountValue) > -1) {
+      history.push('/account/' + users[usernames.indexOf(accountValue)].address)
+    }
     if (isAddress(accountValue)) {
       history.push('/account/' + accountValue)
-      if (!savedAccounts.includes(accountValue)) {
-        addAccount(accountValue)
-      }
+      // if (!savedAccounts.includes(accountValue)) {
+      //   addAccount(accountValue)
+      // }
     }
   }
 
@@ -93,7 +103,7 @@ function AccountSearch({ history, small }) {
           <AutoRow>
             <Wrapper>
               <Input
-                placeholder="0x..."
+                placeholder="Username or Ethereum address..."
                 onChange={(e) => {
                   setAccountValue(e.target.value)
                 }}
@@ -104,7 +114,7 @@ function AccountSearch({ history, small }) {
         </>
       )}
 
-      <AutoColumn gap={'12px'}>
+      {/* <AutoColumn gap={'12px'}>
         {!small && (
           <Panel>
             <DashGrid center={true} style={{ height: 'fit-content', padding: '0 0 1rem 0' }}>
@@ -168,7 +178,7 @@ function AccountSearch({ history, small }) {
             )}
           </>
         )}
-      </AutoColumn>
+      </AutoColumn> */}
     </AutoColumn>
   )
 }

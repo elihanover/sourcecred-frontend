@@ -7,7 +7,7 @@ import { useMedia } from 'react-use'
 import { transparentize } from 'polished'
 import { TYPE } from '../../Theme'
 import { withRouter } from 'react-router-dom'
-import { TrendingUp, List, PieChart, Disc } from 'react-feather'
+import { TrendingUp, List, PieChart, Disc, Award, Eye, Heart } from 'react-feather'
 import Link from '../Link'
 import { useSessionStart } from '../../contexts/Application'
 import { useDarkModeManager } from '../../contexts/LocalStorage'
@@ -116,37 +116,6 @@ function SideNav({ history }) {
             <Title />
             {!below1080 && (
               <AutoColumn gap="1.25rem" style={{ marginTop: '1rem' }}>
-                <BasicLink to="/home">
-                  <Option activeText={history.location.pathname === '/home' ?? undefined}>
-                    <TrendingUp size={20} style={{ marginRight: '.75rem' }} />
-                    Overview
-                  </Option>
-                </BasicLink>
-                <BasicLink to="/tokens">
-                  <Option
-                    activeText={
-                      (history.location.pathname.split('/')[1] === 'tokens' ||
-                        history.location.pathname.split('/')[1] === 'token') ??
-                      undefined
-                    }
-                  >
-                    <Disc size={20} style={{ marginRight: '.75rem' }} />
-                    Tokens
-                  </Option>
-                </BasicLink>
-                <BasicLink to="/pairs">
-                  <Option
-                    activeText={
-                      (history.location.pathname.split('/')[1] === 'pairs' ||
-                        history.location.pathname.split('/')[1] === 'pair') ??
-                      undefined
-                    }
-                  >
-                    <PieChart size={20} style={{ marginRight: '.75rem' }} />
-                    Pairs
-                  </Option>
-                </BasicLink>
-
                 <BasicLink to="/accounts">
                   <Option
                     activeText={
@@ -159,32 +128,81 @@ function SideNav({ history }) {
                     Accounts
                   </Option>
                 </BasicLink>
+
+                <BasicLink to="/cred">
+                  <Option
+                    activeText={
+                      (history.location.pathname.split('/')[1] === 'cred' ||
+                        history.location.pathname.split('/')[1] === 'cred') ??
+                      undefined
+                    }
+                  >
+                    <Heart size={20} style={{ marginRight: '.75rem' }} />
+                    Cred
+                  </Option>
+                </BasicLink>
+                
+                <BasicLink to="/tokens">
+                  <Option
+                    activeText={
+                      (history.location.pathname.split('/')[1] === 'tokens' ||
+                        history.location.pathname.split('/')[1] === 'token') ??
+                      undefined
+                    }
+                  >
+                    <Disc size={20} style={{ marginRight: '.75rem' }} />
+                    Tokens
+                  </Option>
+                </BasicLink>
+
+                <BasicLink to="/badges">
+                  <Option
+                    activeText={
+                      (history.location.pathname.split('/')[1] === 'badges' ||
+                        history.location.pathname.split('/')[1] === 'badges') ??
+                      undefined
+                    }
+                  >
+                    <Award size={20} style={{ marginRight: '.75rem' }} />
+                    Badges
+                  </Option>
+                </BasicLink>
+
+                {/* <BasicLink to="/pairs">
+                  <Option
+                    activeText={
+                      (history.location.pathname.split('/')[1] === 'pairs' ||
+                        history.location.pathname.split('/')[1] === 'pair') ??
+                      undefined
+                    }
+                  >
+                    <PieChart size={20} style={{ marginRight: '.75rem' }} />
+                    Pairs
+                  </Option>
+                </BasicLink> */}
+
+                <BasicLink to="/home">
+                  <Option activeText={history.location.pathname === '/home' ?? undefined}>
+                    <TrendingUp size={20} style={{ marginRight: '.75rem' }} />
+                    Overview
+                  </Option>
+                </BasicLink>
               </AutoColumn>
             )}
           </AutoColumn>
           <AutoColumn gap="0.5rem" style={{ marginLeft: '.75rem', marginBottom: '4rem' }}>
             <HeaderText>
-              <Link href="https://uniswap.org" target="_blank">
-                Uniswap.org
-              </Link>
-            </HeaderText>
-            <HeaderText>
-              <Link href="https://v1.uniswap.info" target="_blank">
-                V1 Analytics
-              </Link>
-            </HeaderText>
-            <HeaderText>
-              <Link href="https://uniswap.org/docs/v2" target="_blank">
+              <Link href="https://sourcecred.io/docs" target="_blank">
                 Docs
               </Link>
             </HeaderText>
             <HeaderText>
-              <Link href="https://discord.com/invite/FCfyBSbCU5" target="_blank">
+              <Link href="https://discord.gg/SEZ2UZef" target="_blank">
                 Discord
               </Link>
             </HeaderText>
             <HeaderText>
-              <Link href="https://twitter.com/UniswapProtocol" target="_blank">
+              <Link href="https://twitter.com/sourcecred" target="_blank">
                 Twitter
               </Link>
             </HeaderText>
