@@ -792,8 +792,8 @@ export function useUsernames() {
 export function useAllCredsData() {
   return [
     {
-      name: "SourceCred Cred",
-      symbol: "CRED",
+      name: 'SourceCred Cred',
+      symbol: 'CRED',
       weights: {
         github: 2,
         discourse: 1,
@@ -801,11 +801,11 @@ export function useAllCredsData() {
         didathing: 16,
         props: 20,
       },
-      usedBy: ["Grain"]
+      usedBy: ['Grain'],
     },
     {
-      name: "DevCred",
-      symbol: "DEV",
+      name: 'DevCred',
+      symbol: 'DEV',
       weights: {
         github: 2,
         discourse: 1,
@@ -813,11 +813,11 @@ export function useAllCredsData() {
         didathing: 1,
         props: 1,
       },
-      usedBy: ["DevFund"]
+      usedBy: ['DevFund'],
     },
     {
-      name: "CommunityCred",
-      symbol: "CCred",
+      name: 'CommunityCred',
+      symbol: 'CCred',
       weights: {
         github: 1,
         discourse: 5,
@@ -825,11 +825,11 @@ export function useAllCredsData() {
         didathing: 1,
         props: 1,
       },
-      usedBy: ["Karma"]
+      usedBy: ['Karma'],
     },
     {
-      name: "VisionCred",
-      symbol: "VIZ",
+      name: 'VisionCred',
+      symbol: 'VIZ',
       weights: {
         github: 0,
         discourse: 20,
@@ -837,7 +837,7 @@ export function useAllCredsData() {
         didathing: 0,
         props: 0,
       },
-      usedBy: ["DevFund"]
+      usedBy: ['DevFund'],
     },
   ]
 }
@@ -845,24 +845,24 @@ export function useAllCredsData() {
 export function useCommunityTokensData() {
   return [
     {
-      name: "Grain",
-      symbol: "GRAIN",
+      name: 'Grain',
+      symbol: 'GRAIN',
       totalSupply: 1000000,
       distribution: {
         weekly: 20000,
       },
     },
     {
-      name: "DevFund",
-      symbol: "DEV",
+      name: 'DevFund',
+      symbol: 'DEV',
       totalSupply: 60000,
       distribution: {
         weekly: 5000,
       },
     },
     {
-      name: "Karma",
-      symbol: "KARMA",
+      name: 'Karma',
+      symbol: 'KARMA',
       totalSupply: 100,
       distribution: {
         weekly: 6000,
@@ -874,18 +874,18 @@ export function useCommunityTokensData() {
 export function useCommunityBadgesData() {
   return [
     {
-      name: "Temporary Benevolent Dictator",
-      symbol: "TBD",
+      name: 'Temporary Benevolent Dictator',
+      symbol: 'TBD',
       totalSupply: 1,
     },
     {
-      name: "Core Contributor",
-      symbol: "CORE",
+      name: 'Core Contributor',
+      symbol: 'CORE',
       totalSupply: 12,
     },
     {
-      name: "2020 Top Contributor",
-      symbol: "2020",
+      name: '2020 Top Contributor',
+      symbol: '2020',
       totalSupply: 1,
     },
   ]

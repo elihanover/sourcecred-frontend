@@ -196,7 +196,7 @@ function TopCredsList({ creds, itemMax = 10, useTracked = false }) {
         )}
         {!below680 && (
           <DataText area="symbol" color="text" fontWeight="500">
-            <FormattedName text={item.usedBy.join(", ")} maxCharacters={20} />
+            <FormattedName text={item.usedBy.join(', ')} maxCharacters={20} />
           </DataText>
         )}
         {/* <DataText area="liq">{formattedNum(item.totalLiquidityUSD, true)}</DataText>
