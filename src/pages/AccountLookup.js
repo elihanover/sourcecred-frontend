@@ -32,7 +32,7 @@ function AccountLookup() {
 
   return (
     <PageWrapper>
-      <ThemedBackground backgroundColor={transparentize(0.6, '#ff007a')} />
+      <ThemedBackground backgroundColor={transparentize(0.6, '#ffbf00')} />
       <FullWrapper>
         <RowBetween>
           <TYPE.largeHeader>SourceCred Wallets</TYPE.largeHeader>

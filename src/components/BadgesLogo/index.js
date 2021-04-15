@@ -30,7 +30,7 @@ const StyledEthereumLogo = styled.div`
   }
 `
 
-export default function TokenLogo({ address, header = false, size = '24px', ...rest }) {
+export default function BadgesLogo({ address, header = false, size = '24px', ...rest }) {
   const [error, setError] = useState(false)
 
   useEffect(() => {
@@ -41,7 +41,7 @@ export default function TokenLogo({ address, header = false, size = '24px', ...r
     return (
       <Inline>
         <span {...rest} alt={''} style={{ fontSize: size }} role="img" aria-label="face">
-          💰
+          💎
         </span>
       </Inline>
     )

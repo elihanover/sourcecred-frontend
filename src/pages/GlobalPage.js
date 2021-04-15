@@ -7,14 +7,21 @@ import { AutoRow, RowBetween } from '../components/Row'
 import { AutoColumn } from '../components/Column'
 import PairList from '../components/PairList'
 import TopTokenList from '../components/TokenList'
+import TopBadgesList from '../components/BadgesList'
 import TxnList from '../components/TxnList'
 import GlobalChart from '../components/GlobalChart'
 import Search from '../components/Search'
 import GlobalStats from '../components/GlobalStats'
 
-import { useGlobalData, useGlobalTransactions } from '../contexts/GlobalData'
+import {
+  useCommunityBadgesData,
+  useCommunityTokensData,
+  useGlobalData,
+  useGlobalTransactions,
+  useTopUsers,
+} from '../contexts/GlobalData'
 import { useAllPairData } from '../contexts/PairData'
-import { useMedia } from 'react-use'
+import { useCopyToClipboard, useMedia } from 'react-use'
 import Panel from '../components/Panel'
 import { useAllTokenData } from '../contexts/TokenData'
 import { formattedNum, formattedPercent } from '../utils'
@@ -25,6 +32,10 @@ import { CustomLink } from '../components/Link'
 import { PageWrapper, ContentWrapper } from '../components'
 import CheckBox from '../components/Checkbox'
 import QuestionHelper from '../components/QuestionHelper'
+import LPList from '../components/LPList'
+import TokenList from '../components/TokenList'
+import BadgesList from '../components/BadgesList'
+import Warning from '../components/Warning'
 
 const ListOptions = styled(AutoRow)`
   height: 40px;
@@ -48,8 +59,9 @@ const GridRow = styled.div`
 
 function GlobalPage() {
   // get data for lists and totals
-  const allPairs = useAllPairData()
-  const allTokens = useAllTokenData()
+  const communityTokens = useCommunityTokensData()
+  const communityBadges = useCommunityBadgesData()
+  const topUsers = useTopUsers()
   const transactions = useGlobalTransactions()
   const { totalLiquidityUSD, oneDayVolumeUSD, volumeChangeUSD, liquidityChangeUSD } = useGlobalData()
 
@@ -73,21 +85,25 @@ function GlobalPage() {
       <ContentWrapper>
         <div>
           <AutoColumn gap="24px" style={{ paddingBottom: below800 ? '0' : '24px' }}>
-            <TYPE.largeHeader>{below800 ? 'SourceCred Analytics' : 'SourceCred Analytics'}</TYPE.largeHeader>
-            <TYPE.header>{
-              below800
-                ? 'The SourceCred DAO maintains the development of SourceCred, a tool for communities to measure and reward value creation.'
-                : 'The SourceCred DAO maintains the development of SourceCred, a tool for communities to measure and reward value creation.'
-            }</TYPE.header>
-            <TYPE.header>{
-              below800
-                ? 'Contributors receive cred for their contributions, which earns grain—a governance token also redemeemable 1-to-1 for USDC.'
-                : 'Contributors receive cred for their contributions, which earns grain—a governance token also redemeemable 1-to-1 for USDC.'
-            }</TYPE.header>
-            <Search />
-            <GlobalStats />
+            <Panel>
+              <TYPE.largeHeader style={{ paddingBottom: '30px' }}>
+                {below800 ? 'SourceCred Analytics' : 'SourceCred Analytics'}
+              </TYPE.largeHeader>
+              <TYPE.header>
+                {
+                  'The SourceCred community maintains the development of SourceCred, a tool for communities to measure and reward value creation.'
+                }
+              </TYPE.header>
+              <TYPE.header>
+                {
+                  'Contributors receive cred for their contributions, which earns grain, a governance token also redemeemable 1-to-1 for USDC.'
+                }
+              </TYPE.header>
+            </Panel>
+            {/* <Search />
+            <GlobalStats /> */}
           </AutoColumn>
-          {below800 && ( // mobile card
+          {/* {below800 && ( // mobile card
             <Box mb={20}>
               <Panel>
                 <Box>
@@ -122,8 +138,8 @@ function GlobalPage() {
                 </Box>
               </Panel>
             </Box>
-          )}
-          {!below800 && (
+          )} */}
+          {/* {!below800 && (
             <GridRow>
               <Panel style={{ height: '100%', minHeight: '300px' }}>
                 <GlobalChart display="liquidity" />
@@ -132,7 +148,7 @@ function GlobalPage() {
                 <GlobalChart display="volume" />
               </Panel>
             </GridRow>
-          )}
+          )} */}
           {below800 && (
             <AutoColumn style={{ marginTop: '6px' }} gap="24px">
               <Panel style={{ height: '100%', minHeight: '300px' }}>
@@ -145,13 +161,35 @@ function GlobalPage() {
               <TYPE.main fontSize={'1.125rem'} style={{ whiteSpace: 'nowrap' }}>
                 Users
               </TYPE.main>
+              <CustomLink to={'/accounts'}>See All</CustomLink>
+            </RowBetween>
+          </ListOptions>
+          <Panel>
+            <LPList lps={topUsers} maxItems={200} />
+          </Panel>
+          <ListOptions gap="10px" style={{ marginTop: '2rem', marginBottom: '.5rem' }}>
+            <RowBetween>
+              <TYPE.main fontSize={'1.125rem'} style={{ whiteSpace: 'nowrap' }}>
+                Tokens
+              </TYPE.main>
               <CustomLink to={'/tokens'}>See All</CustomLink>
             </RowBetween>
           </ListOptions>
-          <Panel style={{ marginTop: '6px', padding: '1.125rem 0 ' }}>
-            <TopTokenList tokens={allTokens} />
+          <Panel>
+            <TopTokenList tokens={communityTokens} maxItems={200} />
           </Panel>
           <ListOptions gap="10px" style={{ marginTop: '2rem', marginBottom: '.5rem' }}>
+            <RowBetween>
+              <TYPE.main fontSize={'1.125rem'} style={{ whiteSpace: 'nowrap' }}>
+                Badges
+              </TYPE.main>
+              <CustomLink to={'/badges'}>See All</CustomLink>
+            </RowBetween>
+          </ListOptions>
+          <Panel>
+            <TopBadgesList badges={communityBadges} itemMax={50} />
+          </Panel>
+          {/* <ListOptions gap="10px" style={{ marginTop: '2rem', marginBottom: '.5rem' }}>
             <RowBetween>
               <TYPE.main fontSize={'1rem'} style={{ whiteSpace: 'nowrap' }}>
                 Top Pairs
@@ -169,15 +207,15 @@ function GlobalPage() {
           </ListOptions>
           <Panel style={{ marginTop: '6px', padding: '1.125rem 0 ' }}>
             <PairList pairs={allPairs} useTracked={useTracked} />
-          </Panel>
-          <span>
+          </Panel> */}
+          {/* <span>
             <TYPE.main fontSize={'1.125rem'} style={{ marginTop: '2rem' }}>
               Transactions
             </TYPE.main>
           </span>
           <Panel style={{ margin: '1rem 0' }}>
             <TxnList transactions={transactions} />
-          </Panel>
+          </Panel> */}
         </div>
       </ContentWrapper>
     </PageWrapper>

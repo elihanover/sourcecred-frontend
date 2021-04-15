@@ -745,7 +745,6 @@ export function useTopLps() {
   return topLps
 }
 
-
 /**
  * Get the top SourceCred users based on grain amount
  * @TODO Uses dummy data right now.
@@ -787,4 +786,107 @@ export function useTopUsers() {
 
 export function useUsernames() {
   return useTopUsers().map((user) => user.username)
+}
+
+// Get all cred types for this organization
+export function useAllCredsData() {
+  return [
+    {
+      name: "SourceCred Cred",
+      symbol: "CRED",
+      weights: {
+        github: 2,
+        discourse: 1,
+        discord: 2,
+        didathing: 16,
+        props: 20,
+      },
+      usedBy: ["Grain"]
+    },
+    {
+      name: "DevCred",
+      symbol: "DEV",
+      weights: {
+        github: 2,
+        discourse: 1,
+        discord: 1,
+        didathing: 1,
+        props: 1,
+      },
+      usedBy: ["DevFund"]
+    },
+    {
+      name: "CommunityCred",
+      symbol: "CCred",
+      weights: {
+        github: 1,
+        discourse: 5,
+        discord: 40,
+        didathing: 1,
+        props: 1,
+      },
+      usedBy: ["Karma"]
+    },
+    {
+      name: "VisionCred",
+      symbol: "VIZ",
+      weights: {
+        github: 0,
+        discourse: 20,
+        discord: 1,
+        didathing: 0,
+        props: 0,
+      },
+      usedBy: ["DevFund"]
+    },
+  ]
+}
+
+export function useCommunityTokensData() {
+  return [
+    {
+      name: "Grain",
+      symbol: "GRAIN",
+      totalSupply: 1000000,
+      distribution: {
+        weekly: 20000,
+      },
+    },
+    {
+      name: "DevFund",
+      symbol: "DEV",
+      totalSupply: 60000,
+      distribution: {
+        weekly: 5000,
+      },
+    },
+    {
+      name: "Karma",
+      symbol: "KARMA",
+      totalSupply: 100,
+      distribution: {
+        weekly: 6000,
+      },
+    },
+  ]
+}
+
+export function useCommunityBadgesData() {
+  return [
+    {
+      name: "Temporary Benevolent Dictator",
+      symbol: "TBD",
+      totalSupply: 1,
+    },
+    {
+      name: "Core Contributor",
+      symbol: "CORE",
+      totalSupply: 12,
+    },
+    {
+      name: "2020 Top Contributor",
+      symbol: "2020",
+      totalSupply: 1,
+    },
+  ]
 }

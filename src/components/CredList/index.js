@@ -15,6 +15,7 @@ import { withRouter } from 'react-router-dom'
 import { TOKEN_BLACKLIST } from '../../constants'
 import FormattedName from '../FormattedName'
 import { TYPE } from '../../Theme'
+import { Heart } from 'react-feather'
 
 dayjs.extend(utc)
 
@@ -112,7 +113,6 @@ const DataText = styled(Flex)`
 
 const SORT_FIELD = {
   LIQ: 'totalLiquidityUSD',
-  WEEKLY: 'weekly',
   VOL: 'oneDayVolumeUSD',
   VOL_UT: 'oneDayVolumeUT',
   SYMBOL: 'symbol',
@@ -122,7 +122,7 @@ const SORT_FIELD = {
 }
 
 // @TODO rework into virtualized list
-function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
+function TopCredsList({ creds, itemMax = 10, useTracked = false }) {
   // page state
   const [page, setPage] = useState(1)
   const [maxPage, setMaxPage] = useState(1)
@@ -138,44 +138,44 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
   useEffect(() => {
     setMaxPage(1) // edit this to do modular
     setPage(1)
-  }, [tokens])
+  }, [creds])
 
-  const formattedTokens = useMemo(() => {
-    return (
-      tokens &&
-      Object.keys(tokens)
-        .filter((key) => {
-          return !TOKEN_BLACKLIST.includes(key)
-        })
-        .map((key) => tokens[key])
-    )
-  }, [tokens])
+  // const formattedTokens = useMemo(() => {
+  //   return (
+  //     tokens &&
+  //     Object.keys(tokens)
+  //       .filter((key) => {
+  //         return !TOKEN_BLACKLIST.includes(key)
+  //       })
+  //       .map((key) => tokens[key])
+  //   )
+  // }, [tokens])
 
-  useEffect(() => {
-    if (tokens && formattedTokens) {
-      let extraPages = 1
-      if (formattedTokens.length % itemMax === 0) {
-        extraPages = 0
-      }
-      setMaxPage(Math.floor(formattedTokens.length / itemMax) + extraPages)
-    }
-  }, [tokens, formattedTokens, itemMax])
+  // useEffect(() => {
+  //   if (tokens && formattedTokens) {
+  //     let extraPages = 1
+  //     if (formattedTokens.length % itemMax === 0) {
+  //       extraPages = 0
+  //     }
+  //     setMaxPage(Math.floor(formattedTokens.length / itemMax) + extraPages)
+  //   }
+  // }, [tokens, formattedTokens, itemMax])
 
-  const filteredList = useMemo(() => {
-    return (
-      formattedTokens &&
-      formattedTokens
-        .sort((a, b) => {
-          if (sortedColumn === SORT_FIELD.SYMBOL || sortedColumn === SORT_FIELD.NAME) {
-            return a[sortedColumn] > b[sortedColumn] ? (sortDirection ? -1 : 1) * 1 : (sortDirection ? -1 : 1) * -1
-          }
-          return parseFloat(a[sortedColumn]) > parseFloat(b[sortedColumn])
-            ? (sortDirection ? -1 : 1) * 1
-            : (sortDirection ? -1 : 1) * -1
-        })
-        .slice(itemMax * (page - 1), page * itemMax)
-    )
-  }, [formattedTokens, itemMax, page, sortDirection, sortedColumn])
+  // const filteredList = useMemo(() => {
+  //   return (
+  //     formattedTokens &&
+  //     formattedTokens
+  //       .sort((a, b) => {
+  //         if (sortedColumn === SORT_FIELD.SYMBOL || sortedColumn === SORT_FIELD.NAME) {
+  //           return a[sortedColumn] > b[sortedColumn] ? (sortDirection ? -1 : 1) * 1 : (sortDirection ? -1 : 1) * -1
+  //         }
+  //         return parseFloat(a[sortedColumn]) > parseFloat(b[sortedColumn])
+  //           ? (sortDirection ? -1 : 1) * 1
+  //           : (sortDirection ? -1 : 1) * -1
+  //       })
+  //       .slice(itemMax * (page - 1), page * itemMax)
+  //   )
+  // }, [formattedTokens, itemMax, page, sortDirection, sortedColumn])
 
   const ListItem = ({ item, index }) => {
     return (
@@ -183,14 +183,9 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
         <DataText area="name" fontWeight="500">
           <Row>
             {!below680 && <div style={{ marginRight: '1rem', width: '10px' }}>{index}</div>}
-            <TokenLogo address={item.id} />
-            <CustomLink style={{ marginLeft: '16px', whiteSpace: 'nowrap' }} to={'/token/' + item.symbol}>
-              <FormattedName
-                text={below680 ? item.symbol : item.name}
-                maxCharacters={below600 ? 8 : 16}
-                adjustSize={true}
-                link={true}
-              />
+            <Heart />
+            <CustomLink style={{ marginLeft: '16px', whiteSpace: 'nowrap' }} to={'/cred/' + item.symbol}>
+              <FormattedName text={item.name} maxCharacters={below600 ? 8 : 20} adjustSize={true} link={true} />
             </CustomLink>
           </Row>
         </DataText>
@@ -199,12 +194,14 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
             <FormattedName text={item.symbol} maxCharacters={5} />
           </DataText>
         )}
-        <DataText area="liq">{item.totalSupply}</DataText>
-        <DataText area="liq">{item.distribution.weekly}</DataText>
-
-        {/* <DataText area="liq">{formattedNum(item.totalLiquidityUSD, true)}</DataText> */}
-        {/* <DataText area="vol">{formattedNum(item.oneDayVolumeUSD, true)}</DataText> */}
-        {/* {!below1080 && (
+        {!below680 && (
+          <DataText area="symbol" color="text" fontWeight="500">
+            <FormattedName text={item.usedBy.join(", ")} maxCharacters={20} />
+          </DataText>
+        )}
+        {/* <DataText area="liq">{formattedNum(item.totalLiquidityUSD, true)}</DataText>
+        <DataText area="vol">{formattedNum(item.oneDayVolumeUSD, true)}</DataText>
+        {!below1080 && (
           <DataText area="price" color="text" fontWeight="500">
             {formattedNum(item.priceUSD, true)}
           </DataText>
@@ -243,8 +240,21 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
             </ClickableText>
           </Flex>
         )}
+        {!below680 && (
+          <Flex alignItems="center">
+            <ClickableText
+              area="usedby"
+              onClick={() => {
+                setSortedColumn(SORT_FIELD.SYMBOL)
+                setSortDirection(sortedColumn !== SORT_FIELD.SYMBOL ? true : !sortDirection)
+              }}
+            >
+              Used By {sortedColumn === SORT_FIELD.SYMBOL ? (!sortDirection ? '↑' : '↓') : ''}
+            </ClickableText>
+          </Flex>
+        )}
 
-        <Flex alignItems="center">
+        {/* <Flex alignItems="center">
           <ClickableText
             area="liq"
             onClick={(e) => {
@@ -252,22 +262,9 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
               setSortDirection(sortedColumn !== SORT_FIELD.LIQ ? true : !sortDirection)
             }}
           >
-            Issued {sortedColumn === SORT_FIELD.LIQ ? (!sortDirection ? '↑' : '↓') : ''}
+            Liquidity {sortedColumn === SORT_FIELD.LIQ ? (!sortDirection ? '↑' : '↓') : ''}
           </ClickableText>
-        </Flex>
-
-        <Flex alignItems="center">
-          <ClickableText
-            area="weekly"
-            onClick={(e) => {
-              setSortedColumn(SORT_FIELD.WEEKLY)
-              setSortDirection(sortedColumn !== SORT_FIELD.WEEKLY ? true : !sortDirection)
-            }}
-          >
-            Minted / Week {sortedColumn === SORT_FIELD.WEEKLY ? (!sortDirection ? '↑' : '↓') : ''}
-          </ClickableText>
-        </Flex>
-
+        </Flex> */}
         {/* <Flex alignItems="center">
           <ClickableText
             area="vol"
@@ -294,8 +291,8 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
               Price {sortedColumn === SORT_FIELD.PRICE ? (!sortDirection ? '↑' : '↓') : ''}
             </ClickableText>
           </Flex>
-        )}
-        {!below1080 && (
+        )} */}
+        {/* {!below1080 && (
           <Flex alignItems="center">
             <ClickableText
               area="change"
@@ -312,8 +309,8 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
       </DashGrid>
       <Divider />
       <List p={0}>
-        {filteredList &&
-          filteredList.map((item, index) => {
+        {creds &&
+          creds.map((item, index) => {
             return (
               <div key={index}>
                 <ListItem key={index} index={(page - 1) * itemMax + index + 1} item={item} />
@@ -335,4 +332,4 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
   )
 }
 
-export default withRouter(TopTokenList)
+export default withRouter(TopCredsList)

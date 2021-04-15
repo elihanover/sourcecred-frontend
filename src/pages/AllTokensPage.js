@@ -2,9 +2,10 @@ import React, { useEffect } from 'react'
 import 'feather-icons'
 
 import TopTokenList from '../components/TokenList'
-import { TYPE } from '../Theme'
+import { TYPE, ThemedBackground } from '../Theme'
+import { transparentize } from 'polished'
 import Panel from '../components/Panel'
-import { useAllTokenData } from '../contexts/TokenData'
+import { useCommunityTokensData } from '../contexts/GlobalData'
 import { PageWrapper, FullWrapper } from '../components'
 import { RowBetween } from '../components/Row'
 import Search from '../components/Search'
@@ -13,7 +14,8 @@ import { useMedia } from 'react-use'
 // import QuestionHelper from '../components/QuestionHelper'
 
 function AllTokensPage() {
-  const allTokens = useAllTokenData()
+  // const allTokens = useAllTokenData()
+  const communityTokens = useCommunityTokensData()
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -25,6 +27,7 @@ function AllTokensPage() {
 
   return (
     <PageWrapper>
+      <ThemedBackground backgroundColor={transparentize(0.6, '#40ff00')} />
       <FullWrapper>
         <RowBetween>
           <TYPE.largeHeader>SourceCred Tokens (ERC20)</TYPE.largeHeader>
@@ -35,7 +38,7 @@ function AllTokensPage() {
           <QuestionHelper text="USD amounts may be inaccurate in low liquiidty pairs or pairs without ETH or stablecoins." />
         </AutoRow> */}
         <Panel style={{ marginTop: '6px', padding: below600 && '1rem 0 0 0 ' }}>
-          <TopTokenList tokens={allTokens} itemMax={50} />
+          <TopTokenList tokens={communityTokens} itemMax={50} />
         </Panel>
       </FullWrapper>
     </PageWrapper>

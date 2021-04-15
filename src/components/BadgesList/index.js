@@ -4,7 +4,7 @@ import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 
 import { Box, Flex, Text } from 'rebass'
-import TokenLogo from '../TokenLogo'
+import BadgesLogo from '../BadgesLogo'
 import { CustomLink } from '../Link'
 import Row from '../Row'
 import { Divider } from '..'
@@ -122,7 +122,7 @@ const SORT_FIELD = {
 }
 
 // @TODO rework into virtualized list
-function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
+function TopBadgesList({ badges, itemMax = 10, useTracked = false }) {
   // page state
   const [page, setPage] = useState(1)
   const [maxPage, setMaxPage] = useState(1)
@@ -138,44 +138,44 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
   useEffect(() => {
     setMaxPage(1) // edit this to do modular
     setPage(1)
-  }, [tokens])
+  }, [badges])
 
-  const formattedTokens = useMemo(() => {
-    return (
-      tokens &&
-      Object.keys(tokens)
-        .filter((key) => {
-          return !TOKEN_BLACKLIST.includes(key)
-        })
-        .map((key) => tokens[key])
-    )
-  }, [tokens])
+  // const formattedTokens = useMemo(() => {
+  //   return (
+  //     tokens &&
+  //     Object.keys(tokens)
+  //       .filter((key) => {
+  //         return !TOKEN_BLACKLIST.includes(key)
+  //       })
+  //       .map((key) => tokens[key])
+  //   )
+  // }, [tokens])
 
-  useEffect(() => {
-    if (tokens && formattedTokens) {
-      let extraPages = 1
-      if (formattedTokens.length % itemMax === 0) {
-        extraPages = 0
-      }
-      setMaxPage(Math.floor(formattedTokens.length / itemMax) + extraPages)
-    }
-  }, [tokens, formattedTokens, itemMax])
+  // useEffect(() => {
+  //   if (tokens && formattedTokens) {
+  //     let extraPages = 1
+  //     if (formattedTokens.length % itemMax === 0) {
+  //       extraPages = 0
+  //     }
+  //     setMaxPage(Math.floor(formattedTokens.length / itemMax) + extraPages)
+  //   }
+  // }, [tokens, formattedTokens, itemMax])
 
-  const filteredList = useMemo(() => {
-    return (
-      formattedTokens &&
-      formattedTokens
-        .sort((a, b) => {
-          if (sortedColumn === SORT_FIELD.SYMBOL || sortedColumn === SORT_FIELD.NAME) {
-            return a[sortedColumn] > b[sortedColumn] ? (sortDirection ? -1 : 1) * 1 : (sortDirection ? -1 : 1) * -1
-          }
-          return parseFloat(a[sortedColumn]) > parseFloat(b[sortedColumn])
-            ? (sortDirection ? -1 : 1) * 1
-            : (sortDirection ? -1 : 1) * -1
-        })
-        .slice(itemMax * (page - 1), page * itemMax)
-    )
-  }, [formattedTokens, itemMax, page, sortDirection, sortedColumn])
+  // const filteredList = useMemo(() => {
+  //   return (
+  //     formattedTokens &&
+  //     formattedTokens
+  //       .sort((a, b) => {
+  //         if (sortedColumn === SORT_FIELD.SYMBOL || sortedColumn === SORT_FIELD.NAME) {
+  //           return a[sortedColumn] > b[sortedColumn] ? (sortDirection ? -1 : 1) * 1 : (sortDirection ? -1 : 1) * -1
+  //         }
+  //         return parseFloat(a[sortedColumn]) > parseFloat(b[sortedColumn])
+  //           ? (sortDirection ? -1 : 1) * 1
+  //           : (sortDirection ? -1 : 1) * -1
+  //       })
+  //       .slice(itemMax * (page - 1), page * itemMax)
+  //   )
+  // }, [formattedTokens, itemMax, page, sortDirection, sortedColumn])
 
   const ListItem = ({ item, index }) => {
     return (
@@ -183,11 +183,11 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
         <DataText area="name" fontWeight="500">
           <Row>
             {!below680 && <div style={{ marginRight: '1rem', width: '10px' }}>{index}</div>}
-            <TokenLogo address={item.id} />
+            <BadgesLogo address={item.symbol} />
             <CustomLink style={{ marginLeft: '16px', whiteSpace: 'nowrap' }} to={'/token/' + item.symbol}>
               <FormattedName
                 text={below680 ? item.symbol : item.name}
-                maxCharacters={below600 ? 8 : 16}
+                maxCharacters={below600 ? 8 : 30}
                 adjustSize={true}
                 link={true}
               />
@@ -200,7 +200,7 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
           </DataText>
         )}
         <DataText area="liq">{item.totalSupply}</DataText>
-        <DataText area="liq">{item.distribution.weekly}</DataText>
+        {/* <DataText area="liq">{item.distribution.weekly}</DataText> */}
 
         {/* <DataText area="liq">{formattedNum(item.totalLiquidityUSD, true)}</DataText> */}
         {/* <DataText area="vol">{formattedNum(item.oneDayVolumeUSD, true)}</DataText> */}
@@ -230,19 +230,10 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
             {below680 ? 'Symbol' : 'Name'} {sortedColumn === SORT_FIELD.NAME ? (!sortDirection ? '↑' : '↓') : ''}
           </ClickableText>
         </Flex>
-        {!below680 && (
-          <Flex alignItems="center">
-            <ClickableText
-              area="symbol"
-              onClick={() => {
-                setSortedColumn(SORT_FIELD.SYMBOL)
-                setSortDirection(sortedColumn !== SORT_FIELD.SYMBOL ? true : !sortDirection)
-              }}
-            >
-              Symbol {sortedColumn === SORT_FIELD.SYMBOL ? (!sortDirection ? '↑' : '↓') : ''}
-            </ClickableText>
-          </Flex>
-        )}
+
+        <Flex alignItems="center">
+          <ClickableText area="symbol">Symbol</ClickableText>
+        </Flex>
 
         <Flex alignItems="center">
           <ClickableText
@@ -253,18 +244,6 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
             }}
           >
             Issued {sortedColumn === SORT_FIELD.LIQ ? (!sortDirection ? '↑' : '↓') : ''}
-          </ClickableText>
-        </Flex>
-
-        <Flex alignItems="center">
-          <ClickableText
-            area="weekly"
-            onClick={(e) => {
-              setSortedColumn(SORT_FIELD.WEEKLY)
-              setSortDirection(sortedColumn !== SORT_FIELD.WEEKLY ? true : !sortDirection)
-            }}
-          >
-            Minted / Week {sortedColumn === SORT_FIELD.WEEKLY ? (!sortDirection ? '↑' : '↓') : ''}
           </ClickableText>
         </Flex>
 
@@ -312,8 +291,8 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
       </DashGrid>
       <Divider />
       <List p={0}>
-        {filteredList &&
-          filteredList.map((item, index) => {
+        {badges &&
+          badges.map((item, index) => {
             return (
               <div key={index}>
                 <ListItem key={index} index={(page - 1) * itemMax + index + 1} item={item} />
@@ -335,4 +314,4 @@ function TopTokenList({ tokens, itemMax = 10, useTracked = false }) {
   )
 }
 
-export default withRouter(TopTokenList)
+export default withRouter(TopBadgesList)
