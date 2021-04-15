@@ -745,7 +745,6 @@ export function useTopLps() {
   return topLps
 }
 
-
 /**
  * Get the top SourceCred users based on grain amount
  * @TODO Uses dummy data right now.

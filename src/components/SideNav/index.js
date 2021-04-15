@@ -141,7 +141,7 @@ function SideNav({ history }) {
                     Cred
                   </Option>
                 </BasicLink>
-                
+
                 <BasicLink to="/tokens">
                   <Option
                     activeText={
