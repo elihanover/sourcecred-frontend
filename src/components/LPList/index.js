@@ -108,7 +108,10 @@ function UserList({ lps, disbaleLinks, maxItems = 10 }) {
           </DataText>
         )}
         <DataText area="name" fontWeight="500" justifyContent="flex-start">
-          <CustomLink style={{ marginLeft: below600 ? 0 : '1rem', whiteSpace: 'nowrap' }} to={'/account/' + lp.username}>
+          <CustomLink
+            style={{ marginLeft: below600 ? 0 : '1rem', whiteSpace: 'nowrap' }}
+            to={'/account/' + lp.username}
+          >
             {below800 ? lp.username.slice(0, 4) + '...' + lp.username.slice(38, 42) : lp.username}
           </CustomLink>
         </DataText>
