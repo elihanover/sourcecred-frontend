@@ -43,10 +43,12 @@ export default function TokenLogo({ address, header = false, size = '24px', ...r
   console.log(tokens)
   console.log('address ' + address)
   // get the token that matches this address
-  const token = address ? tokens.reduce(
-    (match, token) => (match ? match : token.address.toLowerCase() === address.toLowerCase() ? token : null),
-    null
-  ) : null
+  const token = address
+    ? tokens.reduce(
+        (match, token) => (match ? match : token.address.toLowerCase() === address.toLowerCase() ? token : null),
+        null
+      )
+    : null
 
   if (!token || !token.path || error || BAD_IMAGES[address]) {
     return (
