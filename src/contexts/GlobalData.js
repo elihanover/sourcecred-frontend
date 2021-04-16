@@ -852,7 +852,8 @@ export function useCommunityTokensData() {
     {
       name: 'Grain',
       symbol: 'GRAIN',
-      description: 'GRAIN rewards contributors to the SourceCred project across all plugins and is redeemable 1-1 with USDC.',
+      description:
+        'GRAIN rewards contributors to the SourceCred project across all plugins and is redeemable 1-1 with USDC.',
       address: '0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984',
       totalSupply: 1000000,
       distribution: {

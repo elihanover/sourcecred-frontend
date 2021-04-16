@@ -190,7 +190,9 @@ function AccountPage({ account }) {
         <Header>
           <RowBetween>
             <span>
-              <TYPE.header fontSize={36} style={{ marginBottom: '15px'}}>{user.username}</TYPE.header>
+              <TYPE.header fontSize={36} style={{ marginBottom: '15px' }}>
+                {user.username}
+              </TYPE.header>
               <TYPE.header fontSize={24}>{account?.slice(0, 6) + '...' + account?.slice(38, 42)}</TYPE.header>
               <Link lineHeight={'145.23%'} href={'https://etherscan.io/address/' + account} target="_blank">
                 <TYPE.main fontSize={14}>View on Etherscan</TYPE.main>
@@ -332,9 +334,7 @@ function AccountPage({ account }) {
                 <TYPE.main>Total Cred</TYPE.main>
               </AutoColumn>
               <AutoColumn gap="8px">
-                <TYPE.header fontSize={24}>
-                  {user.paid ? user.paid : '-'}
-                </TYPE.header>
+                <TYPE.header fontSize={24}>{user.paid ? user.paid : '-'}</TYPE.header>
                 <TYPE.main>Total Grain Earned</TYPE.main>
               </AutoColumn>
               <AutoColumn gap="8px">

@@ -66,12 +66,7 @@ const Input = styled.input`
   }
 `
 
-const PLUGIN_OPTIONS = [
-  'Github',
-  'Forums',
-  'Discord',
-  'Props',
-]
+const PLUGIN_OPTIONS = ['Github', 'Forums', 'Discord', 'Props']
 
 function AllCredsPage() {
   const allCreds = useAllCredsData()
@@ -118,7 +113,9 @@ function AllCredsPage() {
         </Panel>
         <Panel>
           <TYPE.largeHeader style={{ marginBottom: '20px' }}>New Cred Type</TYPE.largeHeader>
-          <TYPE.main style={{ marginBottom: '30px' }}>Create a new perspective on what's valuable for your organization.</TYPE.main>
+          <TYPE.main style={{ marginBottom: '30px' }}>
+            Create a new perspective on what's valuable for your organization.
+          </TYPE.main>
 
           <TYPE.header style={{ marginBottom: '10px' }}>Name</TYPE.header>
           <Wrapper open={false} shadow={true} small={false} style={{ marginBottom: '20px' }}>
@@ -172,9 +169,13 @@ function AllCredsPage() {
             ))}
           </Row>
 
-          {Object.keys(selectedPlugins).map((plugin) => selectedPlugins[plugin] 
-            ? <PluginConfig plugin={plugin} />
-            :  <TYPE.header style={{ marginBottom: '10px' }}>No {plugin}</TYPE.header>)}
+          {Object.keys(selectedPlugins).map((plugin) =>
+            selectedPlugins[plugin] ? (
+              <PluginConfig plugin={plugin} />
+            ) : (
+              <TYPE.header style={{ marginBottom: '10px' }}>No {plugin}</TYPE.header>
+            )
+          )}
 
           <ButtonDark style={{ width: '100px' }}>Summon</ButtonDark>
         </Panel>

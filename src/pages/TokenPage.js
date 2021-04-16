@@ -168,13 +168,10 @@ function TokenPage({ address, history }) {
    * in practice that it's there if this page has loaded.
    */
   const tokens = useCommunityTokensData()
-  const token = tokens.reduce((match, token) => 
-    match
-    ? match
-    : token.address.toLowerCase() === address.toLowerCase()
-    ? token
-    : null
-    , null) // get the token that matches this address
+  const token = tokens.reduce(
+    (match, token) => (match ? match : token.address.toLowerCase() === address.toLowerCase() ? token : null),
+    null
+  ) // get the token that matches this address
 
   useEffect(() => {
     window.scrollTo({
@@ -244,7 +241,11 @@ function TokenPage({ address, history }) {
                   <TokenLogo address={address} size="32px" style={{ alignSelf: 'center' }} />
                   <TYPE.main fontSize={below1080 ? '1.5rem' : '2rem'} fontWeight={500} style={{ margin: '0 1rem' }}>
                     <RowFixed gap="6px">
-                      <FormattedName text={token.name ? token.name + ' ' : ''} maxCharacters={16} style={{ marginRight: '6px' }} />{' '}
+                      <FormattedName
+                        text={token.name ? token.name + ' ' : ''}
+                        maxCharacters={16}
+                        style={{ marginRight: '6px' }}
+                      />{' '}
                       {token.symbol ? `(${token.symbol})` : ''}
                     </RowFixed>
                   </TYPE.main>{' '}

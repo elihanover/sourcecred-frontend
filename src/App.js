@@ -6,7 +6,14 @@ import { Route, Switch, BrowserRouter, Redirect } from 'react-router-dom'
 import GlobalPage from './pages/GlobalPage'
 import TokenPage from './pages/TokenPage'
 import PairPage from './pages/PairPage'
-import { useGlobalData, useGlobalChartData, useUsernames, useTopUsers, useCommunityTokensData, useCommunityBadgesData } from './contexts/GlobalData'
+import {
+  useGlobalData,
+  useGlobalChartData,
+  useUsernames,
+  useTopUsers,
+  useCommunityTokensData,
+  useCommunityBadgesData,
+} from './contexts/GlobalData'
 import { isAddress } from './utils'
 import AccountPage from './pages/AccountPage'
 import AllTokensPage from './pages/AllTokensPage'
@@ -156,7 +163,7 @@ function App() {
                     isAddress(match.params.tokenAddress.toLowerCase()) &&
                     !Object.keys(TOKEN_BLACKLIST).includes(match.params.tokenAddress.toLowerCase())
                   ) {
-                    console.log("IS ADDRESS")
+                    console.log('IS ADDRESS')
                     return (
                       <LayoutWrapper savedOpen={savedOpen} setSavedOpen={setSavedOpen}>
                         <TokenPage address={match.params.tokenAddress.toLowerCase()} />
