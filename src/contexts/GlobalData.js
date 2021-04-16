@@ -756,30 +756,35 @@ export function useTopUsers() {
       address: '0x8ADbc19F60cAb31dBbb547F2e131987A0C3092B1',
       cred: 37000,
       grain: 350000,
+      paid: 500000,
     },
     {
       username: 'lbstrobbe',
       address: '0x687989dfvdf8v9f783bsd',
       cred: 16000,
       grain: 99000,
+      paid: 120000,
     },
     {
       username: 'Thena',
       address: '0x0983498jvdfvdf8v9f783bsd',
       cred: 16000,
       grain: 60000,
+      paid: 70000,
     },
     {
       username: 'KuraFire',
       address: '0x3498jvdfvdf8v9f783bsd',
       cred: 14000,
       grain: 64000,
+      paid: 80000,
     },
     {
       username: 's-ben',
       address: '0x987jvdfvdf8v9f783bsd',
       cred: 14000,
       grain: 90000,
+      paid: 90000,
     },
   ]
 }
@@ -847,22 +852,28 @@ export function useCommunityTokensData() {
     {
       name: 'Grain',
       symbol: 'GRAIN',
+      description: 'GRAIN rewards contributors to the SourceCred project across all plugins and is redeemable 1-1 with USDC.',
+      address: '0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984',
       totalSupply: 1000000,
       distribution: {
         weekly: 20000,
       },
+      path: '../assets/sclogo_bw.svg',
     },
     {
       name: 'DevFund',
       symbol: 'DEV',
+      address: '0x514910771af9ca656af840dff83e8264ecf986ca',
       totalSupply: 60000,
       distribution: {
         weekly: 5000,
       },
+      path: '../assets/sclogo_bw.svg',
     },
     {
       name: 'Karma',
       symbol: 'KARMA',
+      address: '0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9',
       totalSupply: 100,
       distribution: {
         weekly: 6000,
@@ -877,16 +888,19 @@ export function useCommunityBadgesData() {
       name: 'Temporary Benevolent Dictator',
       symbol: 'TBD',
       totalSupply: 1,
+      owners: ['decentralion'],
     },
     {
       name: 'Core Contributor',
       symbol: 'CORE',
       totalSupply: 12,
+      owners: ['decentralion', 'lbstrobbe', 'Thena'],
     },
     {
       name: '2020 Top Contributor',
       symbol: '2020',
       totalSupply: 1,
+      owners: ['Thena'],
     },
   ]
 }

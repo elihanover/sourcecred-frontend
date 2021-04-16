@@ -6,7 +6,7 @@ import { Route, Switch, BrowserRouter, Redirect } from 'react-router-dom'
 import GlobalPage from './pages/GlobalPage'
 import TokenPage from './pages/TokenPage'
 import PairPage from './pages/PairPage'
-import { useGlobalData, useGlobalChartData } from './contexts/GlobalData'
+import { useGlobalData, useGlobalChartData, useUsernames, useTopUsers, useCommunityTokensData, useCommunityBadgesData } from './contexts/GlobalData'
 import { isAddress } from './utils'
 import AccountPage from './pages/AccountPage'
 import AllTokensPage from './pages/AllTokensPage'
@@ -104,6 +104,12 @@ function App() {
   const globalChartData = useGlobalChartData()
   const [latestBlock, headBlock] = useLatestBlocks()
 
+  const usernames = useUsernames()
+  const users = useTopUsers()
+
+  const tokens = useCommunityTokensData()
+  const badges = useCommunityBadgesData()
+
   // show warning
   const showWarning = headBlock && latestBlock ? headBlock - latestBlock > BLOCK_DIFFERENCE_THRESHOLD : false
 
@@ -129,10 +135,28 @@ function App() {
                 strict
                 path="/token/:tokenAddress"
                 render={({ match }) => {
+                  // TODO: IF THIS IS ONE OF OUR COMMUNITY TOKENS
+                  const tokenLookup = match.params.tokenAddress
+                  const tokenNames = tokens.map(({ symbol }) => symbol)
+                  const token = isAddress(tokenLookup)
+                    ? tokenLookup
+                    : tokenNames.indexOf(tokenLookup.toUpperCase()) > -1 // if symbol in here
+                    ? tokens[tokenNames.indexOf(tokenLookup)].address
+                    : null
+
+                  return token ? (
+                    <LayoutWrapper savedOpen={savedOpen} setSavedOpen={setSavedOpen}>
+                      <TokenPage address={token} />
+                    </LayoutWrapper>
+                  ) : (
+                    <Redirect to="/home" />
+                  )
+
                   if (
                     isAddress(match.params.tokenAddress.toLowerCase()) &&
                     !Object.keys(TOKEN_BLACKLIST).includes(match.params.tokenAddress.toLowerCase())
                   ) {
+                    console.log("IS ADDRESS")
                     return (
                       <LayoutWrapper savedOpen={savedOpen} setSavedOpen={setSavedOpen}>
                         <TokenPage address={match.params.tokenAddress.toLowerCase()} />
@@ -143,7 +167,7 @@ function App() {
                   }
                 }}
               />
-              <Route
+              {/* <Route
                 exacts
                 strict
                 path="/pair/:pairAddress"
@@ -161,21 +185,28 @@ function App() {
                     return <Redirect to="/home" />
                   }
                 }}
-              />
+              /> */}
+
+              {/* TODO: ADD SUPPORT FOR USERNAME ROUTES */}
               <Route
                 exacts
                 strict
                 path="/account/:accountAddress"
                 render={({ match }) => {
-                  if (isAddress(match.params.accountAddress.toLowerCase())) {
-                    return (
-                      <LayoutWrapper savedOpen={savedOpen} setSavedOpen={setSavedOpen}>
-                        <AccountPage account={match.params.accountAddress.toLowerCase()} />
-                      </LayoutWrapper>
-                    )
-                  } else {
-                    return <Redirect to="/home" />
-                  }
+                  const accountLookup = match.params.accountAddress
+                  const account = isAddress(accountLookup)
+                    ? accountLookup
+                    : usernames.indexOf(accountLookup) > -1
+                    ? users[usernames.indexOf(accountLookup)].address
+                    : null
+
+                  return account ? (
+                    <LayoutWrapper savedOpen={savedOpen} setSavedOpen={setSavedOpen}>
+                      <AccountPage account={account} />
+                    </LayoutWrapper>
+                  ) : (
+                    <Redirect to="/home" />
+                  )
                 }}
               />
 

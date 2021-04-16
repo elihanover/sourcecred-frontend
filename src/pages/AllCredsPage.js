@@ -8,14 +8,11 @@ import { transparentize } from 'polished'
 import Panel from '../components/Panel'
 import { useAllCredsData } from '../contexts/GlobalData'
 import { PageWrapper, FullWrapper } from '../components'
-import { RowBetween } from '../components/Row'
+import Row, { RowBetween } from '../components/Row'
 import Search from '../components/Search'
 import { useMedia } from 'react-use'
-import { ButtonLight } from '../components/ButtonStyled'
-import DropdownSelect from '../components/DropdownSelect'
-import CheckBox from '../components/Checkbox'
-// import CheckBox from '../components/Checkbox'
-// import QuestionHelper from '../components/QuestionHelper'
+import { ButtonDark, ButtonLight } from '../components/ButtonStyled'
+import PluginConfig from '../components/PluginConfig'
 
 const Wrapper = styled.div`
   display: flex;
@@ -69,20 +66,19 @@ const Input = styled.input`
   }
 `
 
-const PLUGIN_OPTIONS = {
-  default: 'Select Plugin..',
-  github: 'Github',
-  forums: 'Forums',
-  discord: 'Discord',
-  props: 'Props',
-}
+const PLUGIN_OPTIONS = [
+  'Github',
+  'Forums',
+  'Discord',
+  'Props',
+]
 
 function AllCredsPage() {
   const allCreds = useAllCredsData()
   const [name, setName] = useState('')
   const [symbol, setSymbol] = useState('')
   const [description, setDescription] = useState('')
-  const [plugin, setPlugin] = useState(PLUGIN_OPTIONS.default)
+  const [selectedPlugins, setSelectedPlugins] = useState({})
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -90,7 +86,14 @@ function AllCredsPage() {
 
   const below600 = useMedia('(max-width: 800px)')
 
-  // const [useTracked, setUseTracked] = useState(true)
+  /**
+   * When a new plugin is selected, we want to add a new field to
+   * tune the weight of that plugin, and then reset the selector.
+   */
+  const newPlugin = (plugin) => {
+    setSelectedPlugins(Object.assign(selectedPlugins, { [plugin]: !selectedPlugins[plugin] }))
+    console.log(selectedPlugins)
+  }
 
   return (
     <PageWrapper>
@@ -114,14 +117,16 @@ function AllCredsPage() {
           <TopCredsList creds={allCreds} itemMax={50} />
         </Panel>
         <Panel>
-          <TYPE.largeHeader style={{ marginBottom: '30px' }}>New Cred Type</TYPE.largeHeader>
+          <TYPE.largeHeader style={{ marginBottom: '20px' }}>New Cred Type</TYPE.largeHeader>
+          <TYPE.main style={{ marginBottom: '30px' }}>Create a new perspective on what's valuable for your organization.</TYPE.main>
+
           <TYPE.header style={{ marginBottom: '10px' }}>Name</TYPE.header>
           <Wrapper open={false} shadow={true} small={false} style={{ marginBottom: '20px' }}>
             <Input
               large={true}
               type={'text'}
               // ref={wrapperRef}
-              placeholder={'"Distopic digital culture points"'}
+              placeholder={'Distopic digital culture points'}
               value={name}
               onChange={(e) => {
                 setName(e.target.value)
@@ -154,10 +159,24 @@ function AllCredsPage() {
               }}
             />
           </Wrapper>
-          <TYPE.header>Plugins</TYPE.header>
-          <DropdownSelect options={PLUGIN_OPTIONS} active={plugin} setActive={setPlugin} color={'#FAAB14'} />
+          <TYPE.header style={{ marginBottom: '10px' }}>Plugins</TYPE.header>
+          <Row style={{ marginBottom: '10px' }}>
+            {PLUGIN_OPTIONS.map((pluginName, id) => (
+              <ButtonLight
+                key={id}
+                onClick={() => newPlugin(pluginName)}
+                style={{ width: '64px', marginRight: '10px' }}
+              >
+                {pluginName}
+              </ButtonLight>
+            ))}
+          </Row>
 
-          <ButtonLight style={{ width: '64px' }}>Summon</ButtonLight>
+          {Object.keys(selectedPlugins).map((plugin) => selectedPlugins[plugin] 
+            ? <PluginConfig plugin={plugin} />
+            :  <TYPE.header style={{ marginBottom: '10px' }}>No {plugin}</TYPE.header>)}
+
+          <ButtonDark style={{ width: '100px' }}>Summon</ButtonDark>
         </Panel>
       </FullWrapper>
     </PageWrapper>

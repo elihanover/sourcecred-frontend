@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { isAddress } from '../../utils/index.js'
 import EthereumLogo from '../../assets/eth.png'
+import { useCommunityTokensData } from '../../contexts/GlobalData.js'
 
 const BAD_IMAGES = {}
 
@@ -37,7 +38,22 @@ export default function TokenLogo({ address, header = false, size = '24px', ...r
     setError(false)
   }, [address])
 
-  if (error || BAD_IMAGES[address]) {
+  // TODO: CHECK IF COMMUNITY ASSET
+  const tokens = useCommunityTokensData()
+  console.log(tokens)
+  console.log("address " + address)
+  // get the token that matches this address
+  const token = tokens.reduce(
+    (match, token) =>
+      match
+        ? match
+        : token.address.toLowerCase() === address.toLowerCase()
+        ? token
+        : null
+        , null
+    )
+
+  if (!token || !token.path || error || BAD_IMAGES[address]) {
     return (
       <Inline>
         <span {...rest} alt={''} style={{ fontSize: size }} role="img" aria-label="face">
@@ -47,40 +63,17 @@ export default function TokenLogo({ address, header = false, size = '24px', ...r
     )
   }
 
-  // hard coded fixes for trust wallet api issues
-  if (address?.toLowerCase() === '0x5e74c9036fb86bd7ecdcb084a0673efc32ea31cb') {
-    address = '0x42456d7084eacf4083f1140d3229471bba2949a8'
-  }
+  // const path = `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${isAddress(
+  //   address
+  // )}/logo.png`
 
-  if (address?.toLowerCase() === '0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f') {
-    address = '0xc011a72400e58ecd99ee497cf89e3775d4bd732f'
-  }
-
-  if (address?.toLowerCase() === '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2') {
-    return (
-      <StyledEthereumLogo size={size} {...rest}>
-        <img
-          src={EthereumLogo}
-          style={{
-            boxShadow: '0px 6px 10px rgba(0, 0, 0, 0.075)',
-            borderRadius: '24px',
-          }}
-          alt=""
-        />
-      </StyledEthereumLogo>
-    )
-  }
-
-  const path = `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${isAddress(
-    address
-  )}/logo.png`
-
+  console.log(token.path)
   return (
     <Inline>
       <Image
         {...rest}
         alt={''}
-        src={path}
+        src={token.path}
         size={size}
         onError={(event) => {
           BAD_IMAGES[address] = true

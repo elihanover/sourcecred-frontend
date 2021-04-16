@@ -35,6 +35,7 @@ import { UNTRACKED_COPY, TOKEN_BLACKLIST, BLOCKED_WARNINGS } from '../constants'
 import QuestionHelper from '../components/QuestionHelper'
 import Checkbox from '../components/Checkbox'
 import { shortenAddress } from '../utils'
+import { useCommunityTokensData } from '../contexts/GlobalData'
 
 const DashboardWrapper = styled.div`
   width: 100%;
@@ -162,6 +163,19 @@ function TokenPage({ address, history }) {
   const [savedTokens, addToken] = useSavedTokens()
   const listedTokens = useListedTokens()
 
+  /**
+   * Search for token within community.  But we know
+   * in practice that it's there if this page has loaded.
+   */
+  const tokens = useCommunityTokensData()
+  const token = tokens.reduce((match, token) => 
+    match
+    ? match
+    : token.address.toLowerCase() === address.toLowerCase()
+    ? token
+    : null
+    , null) // get the token that matches this address
+
   useEffect(() => {
     window.scrollTo({
       behavior: 'smooth',
@@ -230,8 +244,8 @@ function TokenPage({ address, history }) {
                   <TokenLogo address={address} size="32px" style={{ alignSelf: 'center' }} />
                   <TYPE.main fontSize={below1080 ? '1.5rem' : '2rem'} fontWeight={500} style={{ margin: '0 1rem' }}>
                     <RowFixed gap="6px">
-                      <FormattedName text={name ? name + ' ' : ''} maxCharacters={16} style={{ marginRight: '6px' }} />{' '}
-                      {formattedSymbol ? `(${formattedSymbol})` : ''}
+                      <FormattedName text={token.name ? token.name + ' ' : ''} maxCharacters={16} style={{ marginRight: '6px' }} />{' '}
+                      {token.symbol ? `(${token.symbol})` : ''}
                     </RowFixed>
                   </TYPE.main>{' '}
                   {!below1080 && (
@@ -270,7 +284,18 @@ function TokenPage({ address, history }) {
                 </RowFixed>
               </span>
             </RowBetween>
-
+            {token.description && (
+              <>
+                <TYPE.main fontSize={'1.125rem'} mr="6px" style={{ marginBottom: '10px' }}>
+                  Description
+                </TYPE.main>
+                <Panel style={{ marginBottom: '20px' }}>
+                  <TYPE.main fontSize={'1.525rem'} mr="6px">
+                    {token.description}
+                  </TYPE.main>
+                </Panel>
+              </>
+            )}
             <>
               {!below1080 && (
                 <RowFixed>
@@ -356,7 +381,7 @@ function TokenPage({ address, history }) {
               </PanelWrapper>
             </>
 
-            <RowBetween style={{ marginTop: '3rem' }}>
+            {/* <RowBetween style={{ marginTop: '3rem' }}>
               <TYPE.main fontSize={'1.125rem'}>Top Pairs</TYPE.main>
               <AutoRow gap="4px" style={{ width: 'fit-content' }}>
                 <Checkbox
@@ -379,7 +404,7 @@ function TokenPage({ address, history }) {
               ) : (
                 <Loader />
               )}
-            </Panel>
+            </Panel> */}
             <RowBetween mt={40} mb={'1rem'}>
               <TYPE.main fontSize={'1.125rem'}>Transactions</TYPE.main> <div />
             </RowBetween>

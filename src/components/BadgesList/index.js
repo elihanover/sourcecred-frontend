@@ -15,6 +15,7 @@ import { withRouter } from 'react-router-dom'
 import { TOKEN_BLACKLIST } from '../../constants'
 import FormattedName from '../FormattedName'
 import { TYPE } from '../../Theme'
+import { IOSView } from 'react-device-detect'
 
 dayjs.extend(utc)
 
@@ -200,6 +201,9 @@ function TopBadgesList({ badges, itemMax = 10, useTracked = false }) {
           </DataText>
         )}
         <DataText area="liq">{item.totalSupply}</DataText>
+        <DataText area="liq">
+          {item.owners.length > 1 ? item.owners[0] + ' and ' + (item.owners.length - 1) + ' others..' : item.owners[0]}
+        </DataText>
         {/* <DataText area="liq">{item.distribution.weekly}</DataText> */}
 
         {/* <DataText area="liq">{formattedNum(item.totalLiquidityUSD, true)}</DataText> */}
@@ -245,6 +249,10 @@ function TopBadgesList({ badges, itemMax = 10, useTracked = false }) {
           >
             Issued {sortedColumn === SORT_FIELD.LIQ ? (!sortDirection ? '↑' : '↓') : ''}
           </ClickableText>
+        </Flex>
+
+        <Flex alignItems="center">
+          <ClickableText area="owners">Owner(s)</ClickableText>
         </Flex>
 
         {/* <Flex alignItems="center">

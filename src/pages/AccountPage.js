@@ -15,13 +15,14 @@ import { transparentize } from 'polished'
 import { ButtonDropdown, ButtonLight } from '../components/ButtonStyled'
 import { PageWrapper, ContentWrapper, StyledIcon } from '../components'
 import DoubleTokenLogo from '../components/DoubleLogo'
-import { Bookmark, Activity } from 'react-feather'
+import { Bookmark, Activity, Users } from 'react-feather'
 import Link from '../components/Link'
 import { FEE_WARNING_TOKENS } from '../constants'
 import { BasicLink } from '../components/Link'
 import { useMedia } from 'react-use'
 import Search from '../components/Search'
 import { useSavedAccounts } from '../contexts/LocalStorage'
+import { useTopUsers } from '../contexts/GlobalData'
 
 const AccountWrapper = styled.div`
   background-color: rgba(255, 255, 255, 0.2);
@@ -127,23 +128,34 @@ function AccountPage({ account }) {
   const [showDropdown, setShowDropdown] = useState(false)
   const [activePosition, setActivePosition] = useState()
 
-  const dynamicPositions = activePosition ? [activePosition] : positions
+  const getUserByAddress = (address) => {
+    for (const user of users) {
+      if (address === user.address) {
+        return user
+      }
+    }
+  }
 
-  const aggregateFees = dynamicPositions?.reduce(function (total, position) {
-    return total + position.fees.sum
-  }, 0)
+  const users = useTopUsers()
+  const user = getUserByAddress(account)
 
-  const positionValue = useMemo(() => {
-    return dynamicPositions
-      ? dynamicPositions.reduce((total, position) => {
-          return (
-            total +
-            (parseFloat(position?.liquidityTokenBalance) / parseFloat(position?.pair?.totalSupply)) *
-              position?.pair?.reserveUSD
-          )
-        }, 0)
-      : null
-  }, [dynamicPositions])
+  // const dynamicPositions = activePosition ? [activePosition] : positions
+
+  // const aggregateFees = dynamicPositions?.reduce(function (total, position) {
+  //   return total + position.fees.sum
+  // }, 0)
+
+  // const positionValue = useMemo(() => {
+  //   return dynamicPositions
+  //     ? dynamicPositions.reduce((total, position) => {
+  //         return (
+  //           total +
+  //           (parseFloat(position?.liquidityTokenBalance) / parseFloat(position?.pair?.totalSupply)) *
+  //             position?.pair?.reserveUSD
+  //         )
+  //       }, 0)
+  //     : null
+  // }, [dynamicPositions])
 
   useEffect(() => {
     window.scrollTo({
@@ -178,23 +190,24 @@ function AccountPage({ account }) {
         <Header>
           <RowBetween>
             <span>
+              <TYPE.header fontSize={36} style={{ marginBottom: '15px'}}>{user.username}</TYPE.header>
               <TYPE.header fontSize={24}>{account?.slice(0, 6) + '...' + account?.slice(38, 42)}</TYPE.header>
               <Link lineHeight={'145.23%'} href={'https://etherscan.io/address/' + account} target="_blank">
                 <TYPE.main fontSize={14}>View on Etherscan</TYPE.main>
               </Link>
             </span>
-            <AccountWrapper>
+            {/* <AccountWrapper>
               <StyledIcon>
                 <Bookmark
                   onClick={handleBookmarkClick}
                   style={{ opacity: isBookmarked ? 0.8 : 0.4, cursor: 'pointer' }}
                 />
               </StyledIcon>
-            </AccountWrapper>
+            </AccountWrapper> */}
           </RowBetween>
         </Header>
         <DashboardWrapper>
-          {showWarning && <Warning>Fees cannot currently be calculated for pairs that include AMPL.</Warning>}
+          {/* {showWarning && <Warning>Fees cannot currently be calculated for pairs that include AMPL.</Warning>}
           {!hideLPContent && (
             <DropdownWrapper>
               <ButtonDropdown width="100%" onClick={() => setShowDropdown(!showDropdown)} open={showDropdown}>
@@ -261,8 +274,8 @@ function AccountPage({ account }) {
                 </Flyout>
               )}
             </DropdownWrapper>
-          )}
-          {!hideLPContent && (
+          )} */}
+          {/* {!hideLPContent && (
             <Panel style={{ height: '100%', marginBottom: '1rem' }}>
               <AutoRow gap="20px">
                 <AutoColumn gap="10px">
@@ -293,8 +306,8 @@ function AccountPage({ account }) {
                 </AutoColumn>
               </AutoRow>
             </Panel>
-          )}
-          {!hideLPContent && (
+          )} */}
+          {/* {!hideLPContent && (
             <PanelWrapper>
               <Panel style={{ gridColumn: '1' }}>
                 {activePosition ? (
@@ -304,9 +317,34 @@ function AccountPage({ account }) {
                 )}
               </Panel>
             </PanelWrapper>
-          )}
+          )} */}
+          <TYPE.main fontSize={'1.125rem'} style={{ marginTop: '1rem' }}>
+            Wallet Stats
+          </TYPE.main>{' '}
+          <Panel
+            style={{
+              marginTop: '1.5rem',
+            }}
+          >
+            <AutoRow gap="20px">
+              <AutoColumn gap="8px">
+                <TYPE.header fontSize={24}>{user.cred ? user.cred : '-'}</TYPE.header>
+                <TYPE.main>Total Cred</TYPE.main>
+              </AutoColumn>
+              <AutoColumn gap="8px">
+                <TYPE.header fontSize={24}>
+                  {user.paid ? user.paid : '-'}
+                </TYPE.header>
+                <TYPE.main>Total Grain Earned</TYPE.main>
+              </AutoColumn>
+              <AutoColumn gap="8px">
+                <TYPE.header fontSize={24}>{user.grain ? user.grain : '-'}</TYPE.header>
+                <TYPE.main>Grain Balance</TYPE.main>
+              </AutoColumn>
+            </AutoRow>
+          </Panel>
           <TYPE.main fontSize={'1.125rem'} style={{ marginTop: '3rem' }}>
-            Positions
+            Tokens (ERC20)
           </TYPE.main>{' '}
           <Panel
             style={{
@@ -352,31 +390,6 @@ function AccountPage({ account }) {
             }}
           >
             <TxnList transactions={transactions} />
-          </Panel>
-          <TYPE.main fontSize={'1.125rem'} style={{ marginTop: '3rem' }}>
-            Wallet Stats
-          </TYPE.main>{' '}
-          <Panel
-            style={{
-              marginTop: '1.5rem',
-            }}
-          >
-            <AutoRow gap="20px">
-              <AutoColumn gap="8px">
-                <TYPE.header fontSize={24}>{totalSwappedUSD ? formattedNum(totalSwappedUSD, true) : '-'}</TYPE.header>
-                <TYPE.main>Total Value Swapped</TYPE.main>
-              </AutoColumn>
-              <AutoColumn gap="8px">
-                <TYPE.header fontSize={24}>
-                  {totalSwappedUSD ? formattedNum(totalSwappedUSD * 0.003, true) : '-'}
-                </TYPE.header>
-                <TYPE.main>Total Fees Paid</TYPE.main>
-              </AutoColumn>
-              <AutoColumn gap="8px">
-                <TYPE.header fontSize={24}>{transactionCount ? transactionCount : '-'}</TYPE.header>
-                <TYPE.main>Total Transactions</TYPE.main>
-              </AutoColumn>
-            </AutoRow>
           </Panel>
         </DashboardWrapper>
       </ContentWrapper>

@@ -159,7 +159,7 @@ function GlobalPage() {
           <ListOptions gap="10px" style={{ marginTop: '2rem', marginBottom: '.5rem' }}>
             <RowBetween>
               <TYPE.main fontSize={'1.125rem'} style={{ whiteSpace: 'nowrap' }}>
-                Users
+                🧙🏽 Contributors
               </TYPE.main>
               <CustomLink to={'/accounts'}>See All</CustomLink>
             </RowBetween>
@@ -170,7 +170,7 @@ function GlobalPage() {
           <ListOptions gap="10px" style={{ marginTop: '2rem', marginBottom: '.5rem' }}>
             <RowBetween>
               <TYPE.main fontSize={'1.125rem'} style={{ whiteSpace: 'nowrap' }}>
-                Tokens
+                🏦 Tokens (ERC20)
               </TYPE.main>
               <CustomLink to={'/tokens'}>See All</CustomLink>
             </RowBetween>
@@ -181,7 +181,7 @@ function GlobalPage() {
           <ListOptions gap="10px" style={{ marginTop: '2rem', marginBottom: '.5rem' }}>
             <RowBetween>
               <TYPE.main fontSize={'1.125rem'} style={{ whiteSpace: 'nowrap' }}>
-                Badges
+                💠 Badges (ERC721)
               </TYPE.main>
               <CustomLink to={'/badges'}>See All</CustomLink>
             </RowBetween>
