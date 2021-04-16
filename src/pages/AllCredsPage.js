@@ -70,11 +70,11 @@ const Input = styled.input`
 `
 
 const PLUGIN_OPTIONS = {
-  default: "Select Plugin..",
-  github: "Github",
-  forums: "Forums",
-  discord: "Discord",
-  props: "Props"
+  default: 'Select Plugin..',
+  github: 'Github',
+  forums: 'Forums',
+  discord: 'Discord',
+  props: 'Props',
 }
 
 function AllCredsPage() {
@@ -102,10 +102,8 @@ function AllCredsPage() {
         </RowBetween>
         <RowBetween>
           <TYPE.header>
-            Directory of all cred types used by this organization.
-            Cred scores are used for different purposes.  Issuance
-            of each token (ERC20) and NFT (ERC721) is dependent on
-            some cred score.
+            Directory of all cred types used by this organization. Cred scores are used for different purposes. Issuance
+            of each token (ERC20) and NFT (ERC721) is dependent on some cred score.
           </TYPE.header>
         </RowBetween>
         {/* <AutoRow gap="4px">
@@ -157,11 +155,7 @@ function AllCredsPage() {
             />
           </Wrapper>
           <TYPE.header>Plugins</TYPE.header>
-          <DropdownSelect
-            options={PLUGIN_OPTIONS}
-            active={plugin}
-            setActive={setPlugin}
-            color={'#FAAB14'} />
+          <DropdownSelect options={PLUGIN_OPTIONS} active={plugin} setActive={setPlugin} color={'#FAAB14'} />
 
           <ButtonLight style={{ width: '64px' }}>Summon</ButtonLight>
         </Panel>
@@ -169,7 +163,5 @@ function AllCredsPage() {
     </PageWrapper>
   )
 }
-
-
 
 export default AllCredsPage
