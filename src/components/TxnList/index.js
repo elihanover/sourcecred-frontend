@@ -337,7 +337,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
               }}
               active={txFilter === TXN_TYPE.SWAP}
             >
-              Swaps
+              GitHub
             </SortText>
             <SortText
               onClick={() => {
@@ -345,7 +345,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
               }}
               active={txFilter === TXN_TYPE.ADD}
             >
-              Adds
+              Discord
             </SortText>
             <SortText
               onClick={() => {
@@ -353,7 +353,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
               }}
               active={txFilter === TXN_TYPE.REMOVE}
             >
-              Removes
+              Discourse
             </SortText>
           </RowFixed>
         )}
@@ -367,10 +367,10 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
               setSortDirection(sortedColumn !== SORT_FIELD.VALUE ? true : !sortDirection)
             }}
           >
-            Total Value {sortedColumn === SORT_FIELD.VALUE ? (!sortDirection ? '↑' : '↓') : ''}
+            Current Cred {sortedColumn === SORT_FIELD.VALUE ? (!sortDirection ? '↑' : '↓') : ''}
           </ClickableText>
         </Flex>
-        {!below780 && (
+        {/* {!below780 && (
           <Flex alignItems="center">
             <ClickableText
               area="amountToken"
@@ -384,9 +384,9 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
               {sortedColumn === SORT_FIELD.AMOUNT0 ? (sortDirection ? '↑' : '↓') : ''}
             </ClickableText>
           </Flex>
-        )}
+        )} */}
         <>
-          {!below780 && (
+          {/* {!below780 && (
             <Flex alignItems="center">
               <ClickableText
                 area="amountOther"
@@ -405,7 +405,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
             <Flex alignItems="center">
               <TYPE.body area="account">Account</TYPE.body>
             </Flex>
-          )}
+          )} */}
           <Flex alignItems="center">
             <ClickableText
               area="time"
