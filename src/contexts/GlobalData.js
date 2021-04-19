@@ -831,9 +831,9 @@ export function useTopUsers() {
         {
           GRAIN: 100,
           DEV: 10,
-          KARMA: 150
-        }
-      ]
+          KARMA: 150,
+        },
+      ],
     },
   ]
 }

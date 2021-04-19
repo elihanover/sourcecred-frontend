@@ -144,7 +144,6 @@ function UserBadgesList({ badges }) {
   const [ethPrice] = useEthPrice()
 
   const ListItem = ({ badge, username, index }) => {
-
     return (
       <DashGrid focus={true}>
         {!below740 && <DataText area="number">{index}</DataText>}
@@ -175,11 +174,13 @@ function UserBadgesList({ badges }) {
                 <TYPE.main color={'green'}>{badge.paid}</TYPE.main>
                 <FormattedName text={badge.symbol} maxCharacters={below740 ? 10 : 18} margin={true} fontSize={'11px'} />
               </RowFixed>
-              {badge.valueUSD && (<AutoColumn gap="4px" justify="flex-end">
-                <RowFixed>
-                  <TYPE.small fontWeight={400}> {formattedNum(badge.paid * badge.valueUSD, true, true)}{' '} </TYPE.small>
-                </RowFixed>
-              </AutoColumn>)}
+              {badge.valueUSD && (
+                <AutoColumn gap="4px" justify="flex-end">
+                  <RowFixed>
+                    <TYPE.small fontWeight={400}> {formattedNum(badge.paid * badge.valueUSD, true, true)} </TYPE.small>
+                  </RowFixed>
+                </AutoColumn>
+              )}
             </AutoColumn>
           </DataText>
         )}

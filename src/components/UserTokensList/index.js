@@ -163,13 +163,15 @@ function UserTokensList({ balances }) {
               <TYPE.main color={balance.valueUSD > 0 ? 'green' : 'purple'}>{balance.balance}</TYPE.main>
               <FormattedName text={balance.symbol} maxCharacters={below740 ? 10 : 18} margin={true} fontSize={'11px'} />
             </RowFixed>
-            {balance.valueUSD > 0 && (<AutoColumn gap="4px" justify="flex-end">
-              <RowFixed>
-                <TYPE.small fontWeight={400}>
-                  {formattedNum(balance.balance * balance.valueUSD, true, true)}{' '}
-                </TYPE.small>
-              </RowFixed>
-            </AutoColumn>)}
+            {balance.valueUSD > 0 && (
+              <AutoColumn gap="4px" justify="flex-end">
+                <RowFixed>
+                  <TYPE.small fontWeight={400}>
+                    {formattedNum(balance.balance * balance.valueUSD, true, true)}{' '}
+                  </TYPE.small>
+                </RowFixed>
+              </AutoColumn>
+            )}
           </AutoColumn>
         </DataText>
         {!below500 && (
@@ -184,11 +186,15 @@ function UserTokensList({ balances }) {
                   fontSize={'11px'}
                 />
               </RowFixed>
-              {balance.valueUSD > 0 && (<AutoColumn gap="4px" justify="flex-end">
-                <RowFixed>
-                  <TYPE.small fontWeight={400}>{formattedNum(balance.paid * balance.valueUSD, true, true)}{' '}</TYPE.small>
-                </RowFixed>
-              </AutoColumn>)}
+              {balance.valueUSD > 0 && (
+                <AutoColumn gap="4px" justify="flex-end">
+                  <RowFixed>
+                    <TYPE.small fontWeight={400}>
+                      {formattedNum(balance.paid * balance.valueUSD, true, true)}{' '}
+                    </TYPE.small>
+                  </RowFixed>
+                </AutoColumn>
+              )}
             </AutoColumn>
           </DataText>
         )}
