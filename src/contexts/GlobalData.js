@@ -753,38 +753,87 @@ export function useTopUsers() {
   return [
     {
       username: 'decentralion',
-      address: '0x8ADbc19F60cAb31dBbb547F2e131987A0C3092B1',
+      address: '0xb76e40277b79b78dfa954cbec863d0e4fd0656ca',
       cred: 37000,
       grain: 350000,
       paid: 500000,
+      balances: [
+        {
+          symbol: 'GRAIN',
+          balance: 100,
+          valueUSD: 1,
+          paid: 1000,
+        },
+        {
+          symbol: 'DEV',
+          balance: 50,
+          valueUSD: 1,
+          paid: 500,
+        },
+        {
+          symbol: 'KARMA',
+          balance: 100,
+          valueUSD: 0,
+          paid: 500,
+        },
+      ],
+      badges: useCommunityBadgesData().filter(({ owners }) => owners.indexOf('decentralion') > -1),
     },
     {
       username: 'lbstrobbe',
-      address: '0x687989dfvdf8v9f783bsd',
+      address: '0x98c32b59a0ac00cd33750427b1a317ebcf84d0f7',
       cred: 16000,
       grain: 99000,
       paid: 120000,
+      balances: [
+        {
+          GRAIN: 100,
+          DEV: 10,
+          KARMA: 150,
+        },
+      ],
     },
     {
       username: 'Thena',
-      address: '0x0983498jvdfvdf8v9f783bsd',
+      address: '0x30293259e3c0034b38e46d464cf5b0ee652d1d07',
       cred: 16000,
       grain: 60000,
       paid: 70000,
+      balances: [
+        {
+          GRAIN: 100,
+          DEV: 50,
+          KARMA: 100,
+        },
+      ],
     },
     {
       username: 'KuraFire',
-      address: '0x3498jvdfvdf8v9f783bsd',
+      address: '0x16a532208240e9c2e35c70dfd308534da252341f',
       cred: 14000,
       grain: 64000,
       paid: 80000,
+      balances: [
+        {
+          GRAIN: 100,
+          DEV: 10,
+          KARMA: 150,
+        },
+      ],
     },
     {
       username: 's-ben',
-      address: '0x987jvdfvdf8v9f783bsd',
+      address: '0x67a57535b11445506a9e340662cd0c9755e5b1b4',
       cred: 14000,
       grain: 90000,
       paid: 90000,
+      balances: [
+        {
+          GRAIN: 100,
+          DEV: 10,
+          KARMA: 150
+        }
+      ]
     },
   ]
 }

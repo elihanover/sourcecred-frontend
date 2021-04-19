@@ -22,7 +22,9 @@ import { BasicLink } from '../components/Link'
 import { useMedia } from 'react-use'
 import Search from '../components/Search'
 import { useSavedAccounts } from '../contexts/LocalStorage'
-import { useTopUsers } from '../contexts/GlobalData'
+import { useCommunityBadgesData, useTopUsers } from '../contexts/GlobalData'
+import UserTokensList from '../components/UserTokensList'
+import UserBadgesList from '../components/UserBadgesList'
 
 const AccountWrapper = styled.div`
   background-color: rgba(255, 255, 255, 0.2);
@@ -351,7 +353,17 @@ function AccountPage({ account }) {
               marginTop: '1.5rem',
             }}
           >
-            <PositionList positions={positions} />
+            <UserTokensList balances={user.balances} />
+          </Panel>
+          <TYPE.main fontSize={'1.125rem'} style={{ marginTop: '3rem' }}>
+            Badges (ERC721)
+          </TYPE.main>{' '}
+          <Panel
+            style={{
+              marginTop: '1.5rem',
+            }}
+          >
+            <UserBadgesList badges={user.badges} />
           </Panel>
           {/* <TYPE.main fontSize={'1.125rem'} style={{ marginTop: '3rem' }}>
             Liquidity Mining Pools
