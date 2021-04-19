@@ -71,7 +71,9 @@ const Input = styled.input`
 
 function AllTokensPage() {
   const allCreds = useAllCredsData()
-  const CRED_TYPES = allCreds.reduce((credTypes, { name, symbol }) => Object.assign(credTypes, { [symbol]: name }), { DEFAULT: '' })
+  const CRED_TYPES = allCreds.reduce((credTypes, { name, symbol }) => Object.assign(credTypes, { [symbol]: name }), {
+    DEFAULT: '',
+  })
 
   const communityTokens = useCommunityTokensData()
   const [name, setName] = useState('')
